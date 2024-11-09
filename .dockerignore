@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+Dockerfile-dev
+docker-compose.yml
+.dockerignore
+
+# Virtual environment
+.env/
+.venv/
+.venv
+venv/
+
+# Special
+README.md
+CHANGELOG.md
+VERSION
+**/*.disabled
+**/.venv
+**/.tmp
+**/.archive
+**/.docs
+**/dev
+**/.dev
+**/tests
+**/.tests
+**/.sandbox

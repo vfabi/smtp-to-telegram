@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smtp-to-telegram
+  namespace: mon
+spec:
+  selector:
+    app: smtp-to-telegram
+  ports:
+    - protocol: TCP
+      port: 25
+      targetPort: 25
+  type: NodePort
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smtp-to-telegram
+  namespace: mon
+spec:
+  selector:
+    matchLabels:
+      app: smtp-to-telegram
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: smtp-to-telegram
+    spec:
+      containers:
+        - name: main
+          image: vfabi/smtp-to-telegram:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 25
+          resources:
+            limits:
+              cpu: 500m
+              memory: 500Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
+          env:
+            - name: APP_ENVIRONMENT
+              value: 'dev'
+            - name: TELEGRAM_BOT_TOKEN
+              value: '1234567890:AABs9kmnpyEn21ylaOJ4RhXhAaaaBbbbCccc'
+            - name: TELEGRAM_MESSAGE_TEMPLATE
+              value: '<b>$mail_from</b> $severity\n\n<b>Subject: </b>$mail_subject\n<b>Message: </b>$mail_body\n<b>Datetime: </b>$mail_dt'
+            - name: TELEGRAM_RECIPIENT_SEVERITY_MAPPING
+              value: '-1230123123:WARNING,1230456789:INFO'

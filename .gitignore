@@ -1,0 +1,10 @@
+# Python
+*.py[cod]
+.venv/
+
+# Log files
+*.log
+
+# Special
+.tmp/
+.vscode/
