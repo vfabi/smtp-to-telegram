@@ -31,7 +31,7 @@ spec:
     spec:
       containers:
         - name: main
-          image: vfabi/smtp-to-telegram:1.0.0
+          image: vfabi/smtp-to-telegram:1.0.1
           imagePullPolicy: Always
           ports:
             - containerPort: 25

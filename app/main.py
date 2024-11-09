@@ -18,7 +18,6 @@ import string
 import threading
 import email
 from email.utils import parseaddr, getaddresses
-from datetime import datetime
 import requests
 from aiosmtpd.controller import Controller
 from aiosmtpd.handlers import Message
@@ -118,8 +117,7 @@ class SMTPHandler(Message):
         mail_to = ','.join(mail_to_all_addresses)
         mail_subject = message['subject']
         mail_from = parseaddr(message['from'])[1]
-        mail_dt = datetime.strptime(message['date'], "%a, %d %b %Y %H:%M:%S %z")
-        mail_dt_formatted = mail_dt.strftime("%Y-%m-%d %H:%M:%S")
+        mail_dt = message['date']
         # mail_to = parseaddr(message['to'])[1]
 
         logger.debug(f"Got new email message from: {mail_from}; to: {mail_to}; subject: {mail_subject}")
@@ -146,7 +144,7 @@ class SMTPHandler(Message):
                     mail_from=mail_from,
                     mail_to=mail_to,
                     severity=severity_string,
-                    mail_dt=mail_dt_formatted
+                    mail_dt=mail_dt
                 )
                 send_telegram_message(telegram_message, recipient_id)
             else:
